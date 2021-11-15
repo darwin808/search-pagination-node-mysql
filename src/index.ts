@@ -4,8 +4,7 @@ import { createConnection } from "typeorm";
 import { Product } from "./entity/product";
 
 const TABLE_NAME = "product";
-const API = "/api/darwin";
-const API2 = "/api/products";
+const API = "/api/products";
 const SEARCH_DB_QUERY =
   "product.title LIKE :search OR product.description LIKE :search";
 
@@ -21,11 +20,6 @@ createConnection().then((connection) => {
   app.use(express.json());
 
   app.get(API, async (req: Request, res: Response) => {
-    const products = await productRepository.find();
-    res.json(products);
-  });
-
-  app.get(API2, async (req: Request, res: Response) => {
     const { search, sort, perPage, page } = req.query;
     const builder = productRepository.createQueryBuilder(TABLE_NAME);
 
